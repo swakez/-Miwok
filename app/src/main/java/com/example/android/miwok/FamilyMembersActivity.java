@@ -11,6 +11,15 @@ import java.util.ArrayList;
 
 public class FamilyMembersActivity extends AppCompatActivity {
 
+    private MediaPlayer mediaPlayer;
+
+    private MediaPlayer.OnCompletionListener mCompletionListener = new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mediaPlayer) {
+            releaseMediaPlayer();
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,14 +46,36 @@ public class FamilyMembersActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+                releaseMediaPlayer();
                 //  Toast.makeText(NumbersActivity.this, "List item clicked", Toast.LENGTH_SHORT).show();
                 Words localword = (Words)adapterView.getItemAtPosition(i);
                 int id = localword.getMusicResourceId();
-                MediaPlayer mediaPlayer = MediaPlayer.create(FamilyMembersActivity.this,id);
+                mediaPlayer = MediaPlayer.create(FamilyMembersActivity.this,id);
                 mediaPlayer.start();
+                mediaPlayer.setOnCompletionListener(mCompletionListener);
 
             }
         });
+
+    }
+
+    private void releaseMediaPlayer(){
+
+        // If mediaplayer is not null it must be playing an audio file
+
+        if(mediaPlayer != null){
+
+            // Release the resource, we no longer need it
+
+            mediaPlayer.release();
+
+        }
+
+        // Set the media player back to null. For our code, we've decided that
+        // setting the media player to null is an easy way to tell that the media player
+        // is not configured to play an audio file at the moment.
+
+        mediaPlayer = null;
 
     }
 

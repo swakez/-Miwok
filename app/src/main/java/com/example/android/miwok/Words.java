@@ -77,4 +77,14 @@ public class Words {
     public int getMusicResourceId() {
         return mMusicResourceId;
     }
+
+    @Override
+    public String toString() {
+        return "Words{" +
+                "mMiwokTranslation='" + mMiwokTranslation + '\'' +
+                ", mDefaultTranslation='" + mDefaultTranslation + '\'' +
+                ", mImageResource=" + mImageResource +
+                ", mMusicResourceId=" + mMusicResourceId +
+                '}';
+    }
 }
